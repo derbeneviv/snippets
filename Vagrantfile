@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
   end
   # this is to fix fork/exec errors in Terraform
   config.vm.synced_folder ".", "/vagrant", mount_options: ['dmode=0755', 'fmode=0774']
-  config.vm.provision "shell",
-    inline: echo "export PROMPT_COMMAND='history -a' >> /etc/bash.bashrc"
+  config.vm.provision "shell" do |s|
+    s.inline = echo "export PROMPT_COMMAND='history -a' >> /etc/bash.bashrc"
+  end
 end

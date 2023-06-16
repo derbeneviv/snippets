@@ -16,3 +16,10 @@ for NODE_HOSTNAME in $(kubectl get node --no-headers -o custom-columns=":metadat
   kubectl label node "${NODE_HOSTNAME}" --overwrite=true "node-role.kubernetes.io/${nodegroup}=yes" || echo "node labeling failed"
 done
 ```
+
+## get spec on resource
+```
+kubectl explain <spec path>
+# i.e.
+kubectl explain pod.spec
+```

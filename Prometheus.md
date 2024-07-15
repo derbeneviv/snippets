@@ -23,5 +23,5 @@ basic query looks like:
 
 now we add groups (note the parenthesis)
 ```
-(longhorn_volume_actual_size_bytes{} * on(pvc_namespace) group_left(label_team) label_replace(kube_namespace_labels{label_team="cibaa"}, "pvc_namespace", "$1", "namespace", "(.*)")) / on(volume, node,pvc_namespace,pvc) (longhorn_volume_capacity_bytes{} * on(pvc_namespace) group_left(label_team) label_replace(kube_namespace_labels{label_team="cibaa"}, "pvc_namespace", "$1", "namespace", "(.*)")) * 100 > 90
+(longhorn_volume_actual_size_bytes{} * on(pvc_namespace) group_left(label_team) label_replace(kube_namespace_labels{label_team="foo"}, "pvc_namespace", "$1", "namespace", "(.*)")) / on(volume, node,pvc_namespace,pvc) (longhorn_volume_capacity_bytes{} * on(pvc_namespace) group_left(label_team) label_replace(kube_namespace_labels{label_team="foo"}, "pvc_namespace", "$1", "namespace", "(.*)")) * 100 > 90
 ```

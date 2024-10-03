@@ -63,6 +63,7 @@ done
 
 
 ## clear resource for re-creating 
+## removes all annotations, fix if needed
 ```
 k get type/name -n namespace -o json | jq 'del(.metadata.generation, .metadata.annotations, .metadata.creationTimestamp, .metadata.resourceVersion, .metadata.uid, .status )'
 ```

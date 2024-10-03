@@ -64,5 +64,5 @@ done
 
 ## clear resource for re-creating 
 ```
-k get type/name -n namespace | jq del(.metadata.generation, .metadata.annotations, .metadata.creationTimestamp, .metadata.resourceVersion, .metadata.uid, .status )
+k get type/name -n namespace -o json | jq 'del(.metadata.generation, .metadata.annotations, .metadata.creationTimestamp, .metadata.resourceVersion, .metadata.uid, .status )'
 ```

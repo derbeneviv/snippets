@@ -67,3 +67,9 @@ done
 ```
 k get type/name -n namespace -o json | jq 'del(.metadata.generation, .metadata.annotations, .metadata.creationTimestamp, .metadata.resourceVersion, .metadata.uid, .status )'
 ```
+
+
+## get all secrets in NS decoded
+```
+k get secrets -n namespace  -o json | jq '[.items[] | select (.) | {"name":.metadata.name, "namespace": .metadata.namespace, "data": (.data | map_values(@base64d)) }]'
+```

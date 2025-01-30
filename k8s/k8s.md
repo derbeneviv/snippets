@@ -73,3 +73,18 @@ k get type/name -n namespace -o json | jq 'del(.metadata.generation, .metadata.a
 ```
 k get secrets -n namespace  -o json | jq '[.items[] | select (.) | {"name":.metadata.name, "namespace": .metadata.namespace, "data": (.data | map_values(@base64d)) }]'
 ```
+
+## Get all secrets in cluster containing specific value (base64-encoded)
+## i.e. value is "31337" and base64-encoded is "MzEzMzcK"
+
+`@tsv` here allows to glue multiple output values in one string https://stackoverflow.com/a/56486525
+```
+kubectl get secrets -A -o json > /tmp/secrets.json
+cat /tmp/secrets.json | jq '.items[] | select(.data != null) | select(.data | to_entries | any(.value == "MzEzMzcK")) |[.metadata.namespace,.metadata.name] | @tsv'  -r
+```
+also we can filter by other fields.  
+i.e. we can find all secrets without ownerReference of ExternalSecret:
+```
+cat /tmp/secrets.json | jq '.items[] | select(.data != null) | select(.metadata.ownerReferences[0].kind != "ExternalSecret") | select(.data | to_entries | any(.value == "c3J2LXAtc2RwLWNpYmFhLXVzZXI=")) |[.metadata.namespace,.metadata.name] | @tsv'  -r
+```
+

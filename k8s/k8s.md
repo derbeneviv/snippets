@@ -1,3 +1,9 @@
+## faster deletion of lots of resources
+Preferably run it from master node, not through proxy
+```
+kubectl delete events -n namespace --all --wait=false
+```
+
 ## get all images in cluster
 ```
 k get pods --all-namespaces -o go-template='{{range .items}}{{.metadata.name}}{{"->"}}{{range .spec.containers}}{{.image}}{{end}}{{"\n"}}{{end}}' 
